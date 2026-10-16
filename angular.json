@@ -15,12 +15,12 @@
             "outputPath": "dist/demo",
             "index": "apps/demo/src/index.html",
             "browser": "apps/demo/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": [],
             "tsConfig": "apps/demo/tsconfig.app.json",
             "styles": [
-              "node_modules/@taiga-ui/core/styles/taiga-ui.less",
+              "node_modules/@taiga-ui/styles/taiga-ui-theme.less",
+              "node_modules/@taiga-ui/styles/taiga-ui-fonts.less",
+              "node_modules/@taiga-ui/legacy/styles/taiga-ui-global.less",
               "apps/demo/src/styles.css"
             ],
             "baseHref": "./"

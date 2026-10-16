@@ -6,6 +6,7 @@ export function tuiWebMcpReadTool(config: TuiWebMcpReadOptions) {
   return {
     name: config.name,
     description: config.description,
+    annotations: {readOnlyHint: true},
     inputSchema: {
       type: 'object',
       properties: {},

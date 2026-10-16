@@ -1,5 +1,5 @@
 :root { color-scheme: light; }
-body { margin: 0; font-family: var(--tui-font-text); }
+body { margin: 0; font: var(--tui-typography-body-m); }
 .demo-layout { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
 .demo-panel { min-width: 0; padding: 1.25rem; border: 1px solid var(--tui-border-normal); border-radius: 1rem; }
 .demo-panel h3 { margin: 0 0 1rem; font-size: 1.125rem; }
