@@ -13,7 +13,6 @@
     "useDefineForClassFields": false,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
     "paths": {
       "@taiga-ui/addon-webmcp": [
         "packages/addon-webmcp/src/public-api.ts"
