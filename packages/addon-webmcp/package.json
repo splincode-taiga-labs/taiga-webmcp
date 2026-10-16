@@ -1,0 +1,25 @@
+{
+  "name": "@taiga-ui/addon-webmcp",
+  "version": "0.1.0",
+  "description": "Experimental opt-in Angular WebMCP helpers for Taiga UI applications",
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/core": "^22.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/splincode-taiga-labs/taiga-webmcp.git",
+    "directory": "packages/addon-webmcp"
+  },
+  "keywords": [
+    "taiga-ui",
+    "angular",
+    "webmcp",
+    "ai",
+    "tools"
+  ]
+}

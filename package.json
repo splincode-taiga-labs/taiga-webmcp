@@ -1,0 +1,44 @@
+{
+  "name": "taiga-webmcp",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "ng serve demo",
+    "build": "npm run build:lib && npm run build:demo",
+    "build:lib": "ng-packagr -p packages/addon-webmcp/ng-package.json",
+    "build:demo": "ng build demo",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=22.22.3"
+  },
+  "dependencies": {
+    "@angular/animations": "22.2.3",
+    "@angular/common": "22.2.3",
+    "@angular/compiler": "22.2.3",
+    "@angular/core": "22.2.3",
+    "@angular/forms": "22.2.3",
+    "@angular/platform-browser": "22.2.3",
+    "@angular/router": "22.2.3",
+    "@taiga-ui/addon-doc": "5.28.0",
+    "@taiga-ui/cdk": "5.28.0",
+    "@taiga-ui/core": "5.28.0",
+    "@taiga-ui/kit": "5.28.0",
+    "highlight.js": "11.11.1",
+    "ngx-highlightjs": "14.0.1",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1",
+    "zone.js": "~0.15.1"
+  },
+  "devDependencies": {
+    "@angular/build": "22.2.3",
+    "@angular/cli": "22.2.3",
+    "@angular/compiler-cli": "22.2.3",
+    "ng-packagr": "22.2.4",
+    "typescript": "~6.0.3",
+    "vitest": "^4.0.0"
+  }
+}
