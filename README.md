@@ -1,6 +1,6 @@
 # Taiga WebMCP
 
-Experimental **@taiga-ui/addon-webmcp** helpers for applications built with Angular 22 and Taiga UI. This is a community project under [splincode-taiga-labs](https://github.com/splincode-taiga-labs), not an official Taiga UI release.
+Experimental **@taiga-ui-labs/webmcp** helpers for applications built with Angular 22 and Taiga UI. This is a community project under [splincode-taiga-labs](https://github.com/splincode-taiga-labs), not an official Taiga UI release.
 
 ## Why
 
@@ -32,7 +32,7 @@ Example:
 
 ```ts
 import {inject, provideExperimentalWebMcpTools} from '@angular/core';
-import {tuiWebMcpFilterTool} from '@taiga-ui/addon-webmcp';
+import {tuiWebMcpFilterTool} from '@taiga-ui-labs/webmcp';
 
 export const providers = [
   provideExperimentalWebMcpTools([
@@ -55,7 +55,7 @@ The corresponding Taiga UI input binds to the same state. In real applications, 
 - Never expose sensitive component state or data automatically.
 - For consequential operations use an explicit user-confirmation flow.
 - Angular Signal Forms already support implicit WebMCP tools; use the native Angular integration rather than duplicating form serialization.
-- Publishing to the `@taiga-ui` npm scope requires authorization from the scope maintainers; the package is **not published** by this repository.
+- Publishing to the `@taiga-ui-labs` npm scope requires the corresponding npm organization permissions; the package is **not published** yet.
 
 ## References
 

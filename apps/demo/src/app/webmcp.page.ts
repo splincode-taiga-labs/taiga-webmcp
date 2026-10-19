@@ -8,7 +8,7 @@ import {WebMcpPlayground} from './playground.component';
   template: `
     <tui-doc-page
       header="WebMCP"
-      package="@taiga-ui/addon-webmcp"
+      package="@taiga-ui-labs/webmcp"
     >
       <ng-template pageTab>
         <p>
@@ -56,7 +56,7 @@ import {WebMcpPlayground} from './playground.component';
 export class WebMcpPage {
   protected readonly example = {
     TypeScript: `import {provideExperimentalWebMcpTools, inject} from '@angular/core';
-import {tuiWebMcpFilterTool} from '@taiga-ui/addon-webmcp';
+import {tuiWebMcpFilterTool} from '@taiga-ui-labs/webmcp';
 
 provideExperimentalWebMcpTools([
   tuiWebMcpFilterTool({

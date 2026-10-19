@@ -14,8 +14,8 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "paths": {
-      "@taiga-ui/addon-webmcp": [
-        "./packages/addon-webmcp/src/public-api.ts"
+      "@taiga-ui-labs/webmcp": [
+        "./packages/webmcp/src/public-api.ts"
       ]
     }
   },

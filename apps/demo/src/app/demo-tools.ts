@@ -3,7 +3,7 @@ import {
   tuiWebMcpFilterTool,
   tuiWebMcpReadTool,
   tuiWebMcpSelectionTool,
-} from '@taiga-ui/addon-webmcp';
+} from '@taiga-ui-labs/webmcp';
 
 import {DemoState} from './demo-state';
 

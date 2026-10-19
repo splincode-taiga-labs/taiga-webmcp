@@ -8,7 +8,7 @@
   "scripts": {
     "start": "ng serve demo",
     "build": "npm run build:lib && npm run build:demo",
-    "build:lib": "ng-packagr -p packages/addon-webmcp/ng-package.json",
+    "build:lib": "ng-packagr -p packages/webmcp/ng-package.json",
     "build:demo": "ng build demo",
     "test": "vitest run"
   },
