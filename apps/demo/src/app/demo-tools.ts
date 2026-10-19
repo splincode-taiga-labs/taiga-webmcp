@@ -20,12 +20,18 @@ export const FILTER_TOOL = tuiWebMcpFilterTool({
 export const SELECT_TOOL = tuiWebMcpSelectionTool({
   name: 'selectDemoEmployee',
   description: 'Select an employee from the visible list using their stable ID.',
-  options: () => inject(DemoState).filteredEmployees().map(({id, name}) => ({id, label: name})),
+  options: () =>
+    inject(DemoState)
+      .filteredEmployees()
+      .map(({id, name}) => ({id, label: name})),
   select: (id) => inject(DemoState).selectedId.set(id),
 });
 
 export const READ_TOOL = tuiWebMcpReadTool({
   name: 'readDemoEmployees',
   description: 'Read the currently visible employee names and IDs.',
-  read: () => inject(DemoState).filteredEmployees().map(({id, name, team}) => ({id, name, team})),
+  read: () =>
+    inject(DemoState)
+      .filteredEmployees()
+      .map(({id, name, team}) => ({id, name, team})),
 });
