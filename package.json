@@ -10,7 +10,9 @@
     "build": "npm run build:lib && npm run build:demo",
     "build:lib": "ng-packagr -p packages/webmcp/ng-package.json",
     "build:demo": "ng build demo",
-    "test": "vitest run"
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "engines": {
     "node": ">=22.22.3"
@@ -42,6 +44,7 @@
     "ng-packagr": "22.2.4",
     "typescript": "~6.0.3",
     "vitest": "^4.0.0",
-    "less": "^4.3.0"
+    "less": "^4.3.0",
+    "prettier": "3.9.10"
   }
 }

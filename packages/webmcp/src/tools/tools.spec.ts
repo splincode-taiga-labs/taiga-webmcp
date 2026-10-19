@@ -15,7 +15,12 @@ describe('WebMCP tools', () => {
 
   it('rejects non-string and excessive input before mutation', () => {
     const setQuery = vi.fn();
-    const tool = tuiWebMcpFilterTool({name: 'filter', description: 'Filter', maxLength: 3, setQuery});
+    const tool = tuiWebMcpFilterTool({
+      name: 'filter',
+      description: 'Filter',
+      maxLength: 3,
+      setQuery,
+    });
 
     expect(tool.execute({query: 5}).isError).toBe(true);
     expect(tool.execute({query: 'abcd'}).isError).toBe(true);
@@ -23,13 +28,20 @@ describe('WebMCP tools', () => {
   });
 
   it('rejects invalid maxLength options', () => {
-    expect(() => tuiWebMcpFilterTool({name: 'x', description: 'x', maxLength: 0, setQuery: vi.fn()})).toThrow(RangeError);
+    expect(() =>
+      tuiWebMcpFilterTool({name: 'x', description: 'x', maxLength: 0, setQuery: vi.fn()}),
+    ).toThrow(RangeError);
   });
 
   it('only selects an allowed stable ID and refreshes options each invocation', () => {
     const select = vi.fn();
     let values = [{id: '1', label: 'Ada'}];
-    const tool = tuiWebMcpSelectionTool({name: 'select', description: 'Select', options: () => values, select});
+    const tool = tuiWebMcpSelectionTool({
+      name: 'select',
+      description: 'Select',
+      options: () => values,
+      select,
+    });
 
     expect(tool.execute({id: '2'}).isError).toBe(true);
     values = [{id: '2', label: 'Grace'}];

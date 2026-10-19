@@ -24,7 +24,7 @@ export class DemoState {
     );
   });
 
-  readonly selectedEmployee = computed(() =>
-    this.employees.find((employee) => employee.id === this.selectedId()) ?? null,
+  readonly selectedEmployee = computed(
+    () => this.employees.find((employee) => employee.id === this.selectedId()) ?? null,
   );
 }

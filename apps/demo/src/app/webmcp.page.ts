@@ -6,14 +6,11 @@ import {WebMcpPlayground} from './playground.component';
 @Component({
   imports: [TuiAddonDoc, WebMcpPlayground],
   template: `
-    <tui-doc-page
-      header="WebMCP"
-      package="@taiga-ui-labs/webmcp"
-    >
+    <tui-doc-page header="WebMCP" package="@taiga-ui-labs/webmcp">
       <ng-template pageTab>
         <p>
-          Semantic tools for AI agents using Taiga UI applications.
-          Update Angular state rather than clicking DOM nodes.
+          Semantic tools for AI agents using Taiga UI applications. Update Angular state rather than
+          clicking DOM nodes.
         </p>
         <p>
           <strong>Experimental:</strong> Angular 22 WebMCP is not a stable browser standard.
@@ -32,22 +29,26 @@ import {WebMcpPlayground} from './playground.component';
         <p><code>tuiWebMcpFilterTool</code> updates a controlled search string.</p>
         <p><code>tuiWebMcpSelectionTool</code> selects a permitted stable ID.</p>
         <p><code>tuiWebMcpReadTool</code> exposes explicit read-only application data.</p>
-        <p>Each helper returns a descriptor for Angular's
+        <p>
+          Each helper returns a descriptor for Angular's
           <code>provideExperimentalWebMcpTools</code>. Nothing is registered automatically.
         </p>
       </ng-template>
       <ng-template pageTab="Setup">
         <h2>Browser and security</h2>
         <p>
-          This playground can be used manually in any supported Angular browser.
-          Real AI agent access requires browser WebMCP support or a compatible polyfill.
+          This playground can be used manually in any supported Angular browser. Real AI agent
+          access requires browser WebMCP support or a compatible polyfill.
         </p>
         <p>
-          Tools are discoverable, not permission checks. Authorize access to data,
-          validate all arguments, and require explicit user confirmation for mutations.
+          Tools are discoverable, not permission checks. Authorize access to data, validate all
+          arguments, and require explicit user confirmation for mutations.
         </p>
         <p>
-          See <a href="https://angular.dev/ai/webmcp" target="_blank" rel="noopener noreferrer">Angular WebMCP documentation</a>.
+          See
+          <a href="https://angular.dev/ai/webmcp" target="_blank" rel="noopener noreferrer"
+            >Angular WebMCP documentation</a
+          >.
         </p>
       </ng-template>
     </tui-doc-page>
