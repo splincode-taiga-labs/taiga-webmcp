@@ -1,0 +1,72 @@
+<div class="demo-layout">
+  <section class="demo-panel">
+    <h3>Taiga UI · Employees</h3>
+    <div class="demo-stack">
+      <tui-textfield>
+        <input
+          tuiInput
+          placeholder="Search by name or team"
+          [ngModel]="state.query()"
+          (ngModelChange)="state.query.set($event)"
+        />
+      </tui-textfield>
+      <span class="demo-meta">The input and WebMCP tool share the same Angular signal.</span>
+    </div>
+    <ul class="demo-list">
+      @for (employee of state.filteredEmployees(); track employee.id) {
+        <li>
+          <div>
+            <strong>{{ employee.name }}</strong>
+            <div class="demo-muted">{{ employee.team }} · {{ employee.id }}</div>
+          </div>
+          <button
+            tuiButton
+            type="button"
+            size="s"
+            [appearance]="state.selectedId() === employee.id ? 'primary' : 'outline'"
+            (click)="state.selectedId.set(employee.id)"
+          >
+            {{ state.selectedId() === employee.id ? 'Selected' : 'Select' }}
+          </button>
+        </li>
+      } @empty {
+        <li class="demo-muted">No employees match the filter.</li>
+      }
+    </ul>
+    <p class="demo-muted">
+      Selected: <strong>{{ state.selectedEmployee()?.name ?? 'Nobody' }}</strong>
+    </p>
+  </section>
+  <section class="demo-panel">
+    <h3>WebMCP · Tool playground</h3>
+    <p class="demo-muted">
+      These controls call the same descriptors registered with Angular WebMCP.
+      No AI client or experimental browser flag is required for this playground.
+    </p>
+    <div class="demo-stack">
+      <label for="filter-tool">filterDemoEmployees</label>
+      <input
+        id="filter-tool"
+        type="text"
+        [ngModel]="filterInput()"
+        (ngModelChange)="filterInput.set($event)"
+      />
+      <button tuiButton size="m" type="button" (click)="filter()">Run filter tool</button>
+      <label for="select-tool">selectDemoEmployee (stable ID)</label>
+      <input
+        id="select-tool"
+        type="text"
+        [ngModel]="selectionInput()"
+        (ngModelChange)="selectionInput.set($event)"
+      />
+      <button tuiButton size="m" type="button" appearance="outline" (click)="select()">
+        Run selection tool
+      </button>
+      <button tuiButton size="m" type="button" appearance="outline" (click)="read()">
+        Read visible employees
+      </button>
+      <div class="demo-muted">Last tool response</div>
+      <pre class="demo-result" aria-live="polite">{{ result() }}</pre>
+    </div>
+  </section>
+</div>
