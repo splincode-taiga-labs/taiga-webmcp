@@ -14,6 +14,7 @@ jobs:
           node-version: '24.15.0'
       - run: npm ci --no-audit --no-fund
       - run: npm run format:check
+      - run: npm run lint
       - run: npm test
       - run: npm run build:lib
       - run: npm run build:demo

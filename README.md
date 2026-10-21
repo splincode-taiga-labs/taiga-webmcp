@@ -13,6 +13,7 @@ Requires Node.js 24.15.0+ (or a compatible Angular 22 Node version).
 ```bash
 npm install
 npm run format:check
+npm run lint
 npm test
 npm run build:lib
 npm start
@@ -24,7 +25,7 @@ Open http://localhost:4200/#/webmcp to see the **@taiga-ui/addon-doc** demo. The
 
 ## Formatting
 
-This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CSS, Markdown, and GitHub Actions YAML. Run `npm run format` to format supported files and `npm run format:check` to verify them. CI enforces the formatting check.
+This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CSS, Markdown, and GitHub Actions YAML. Run `npm run format` to format supported files and `npm run format:check` to verify them. CI enforces the formatting check. ESLint applies recommended Angular and TypeScript rules separately from Prettier; use `npm run lint` to check code and `npm run lint:fix` for safe automatic fixes.
 
 ## API
 
