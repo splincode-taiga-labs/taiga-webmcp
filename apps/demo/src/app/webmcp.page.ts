@@ -100,7 +100,7 @@ employeeForm = form(
       name: 'saveDemoEmployeeDraft',
       description: 'Validate and save a local employee draft.',
     },
-    submission: {action: async (field) => this.lastSaved.set(field().value())},
+    submission: {action: (field) => { this.lastSaved.set(field().value()); return Promise.resolve(); }},
   },
 );
 
