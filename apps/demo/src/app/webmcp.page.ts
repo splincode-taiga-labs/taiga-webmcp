@@ -18,7 +18,7 @@ import {WebMcpPlayground} from './playground.component';
         </p>
         <tui-doc-example
           id="employees"
-          heading="Employees · Search and selection"
+          heading="Employees · Search, sorting, pagination and selection"
           [content]="example"
         >
           <app-webmcp-playground />
@@ -29,6 +29,8 @@ import {WebMcpPlayground} from './playground.component';
         <p><code>tuiWebMcpFilterTool</code> updates a controlled search string.</p>
         <p><code>tuiWebMcpSelectionTool</code> selects a permitted stable ID.</p>
         <p><code>tuiWebMcpReadTool</code> exposes explicit read-only application data.</p>
+        <p><code>tuiWebMcpSortTool</code> sorts only approved columns.</p>
+        <p><code>tuiWebMcpPaginationTool</code> validates page bounds and sizes.</p>
         <p>
           Each helper returns a descriptor for Angular's
           <code>provideExperimentalWebMcpTools</code>. Nothing is registered automatically.
@@ -37,7 +39,7 @@ import {WebMcpPlayground} from './playground.component';
       <ng-template pageTab="Setup">
         <h2>Browser and security</h2>
         <p>
-          This playground can be used manually in any supported Angular browser. Real AI agent
+          This playground uses TuiTable and TuiTablePagination and can be used manually in any supported Angular browser. Real AI agent
           access requires browser WebMCP support or a compatible polyfill.
         </p>
         <p>

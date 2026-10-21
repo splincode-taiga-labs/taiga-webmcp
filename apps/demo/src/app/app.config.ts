@@ -9,7 +9,7 @@ import {TUI_DOC_DEFAULT_TABS, TUI_DOC_PAGES, TUI_DOC_TITLE} from '@taiga-ui/addo
 import {provideTaiga} from '@taiga-ui/core';
 import {provideHighlightOptions} from 'ngx-highlightjs';
 
-import {FILTER_TOOL, READ_TOOL, SELECT_TOOL} from './demo-tools';
+import {FILTER_TOOL, PAGINATION_TOOL, READ_TOOL, SELECT_TOOL, SORT_TOOL} from './demo-tools';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'webmcp'},
@@ -28,6 +28,8 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalWebMcpTools([FILTER_TOOL]),
     provideExperimentalWebMcpTools([SELECT_TOOL]),
     provideExperimentalWebMcpTools([READ_TOOL]),
+    provideExperimentalWebMcpTools([SORT_TOOL]),
+    provideExperimentalWebMcpTools([PAGINATION_TOOL]),
     {
       provide: TUI_DOC_PAGES,
       useValue: [{title: 'WebMCP', section: 'Examples', route: '/webmcp'}],

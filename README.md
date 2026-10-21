@@ -32,6 +32,8 @@ This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CS
 - `tuiWebMcpFilterTool({name, description, setQuery, maxLength?})`: validates a string and updates a controlled filter.
 - `tuiWebMcpSelectionTool({name, description, options, select})`: checks the selected stable ID against the latest allowed options.
 - `tuiWebMcpReadTool({name, description, read})`: serializes an explicit, read-only snapshot.
+- `tuiWebMcpSortTool({name, description, columns, setSort})`: sorts using approved column names and `asc`/`desc` directions.
+- `tuiWebMcpPaginationTool({name, description, pageSizes, getTotal, setPagination})`: validates zero-based page indices and allowed sizes against the current item count.
 - `tuiWebMcpTextResult(text, isError?)`: creates a text tool response.
 
 Example:
@@ -52,6 +54,12 @@ export const providers = [
 ```
 
 The corresponding Taiga UI input binds to the same state. In real applications, locate tools at app/route injector scope. For route-level tools enable `withAutoCleanupInjectors()`.
+
+## Taiga UI table integration
+
+The interactive `@taiga-ui/addon-doc` playground uses actual `TuiTable` and `TuiTablePagination` from `@taiga-ui/addon-table`. Search, sorting, selection and pagination act on the **same Angular signals**, whether invoked from the UI or an AI agent. Names and page sizes are explicitly allowlisted, and pagination is bounded by the live filtered count.
+
+For forms, Angular Signal Forms can already expose forms directly with `provideExperimentalWebMcpForms()` and `experimentalWebMcpTool` on `form()`. Use that built-in integration rather than creating a separate tool for each input.
 
 ## Safety and compatibility
 
