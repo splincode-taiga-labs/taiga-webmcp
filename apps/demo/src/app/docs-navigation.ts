@@ -6,7 +6,7 @@ export const DOC_PAGES = [
 ] as const;
 
 /** The addon-doc component generates case-sensitive tab links from pageTab labels. */
-export const WEBMCP_TAB_PATHS = ['','API','Setup'] as const;
+export const WEBMCP_TAB_PATHS = ['', 'API', 'Setup'] as const;
 
 export function webMcpTabIndex(path: string | undefined): number {
   const index = WEBMCP_TAB_PATHS.findIndex((tab) => tab === (path ?? ''));

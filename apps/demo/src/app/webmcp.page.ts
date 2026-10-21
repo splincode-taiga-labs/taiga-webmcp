@@ -12,11 +12,7 @@ import {SIGNAL_FORM_EXAMPLE, TABLE_EXAMPLE} from './webmcp-examples';
 @Component({
   imports: [RouterOutlet, TuiAddonDoc, WebMcpPlayground, WebMcpSignalForm],
   template: `
-    <tui-doc-page
-      header="WebMCP"
-      package="@taiga-ui-labs/webmcp"
-      [(activeItemIndex)]="activeTab"
-    >
+    <tui-doc-page header="WebMCP" package="@taiga-ui-labs/webmcp" [(activeItemIndex)]="activeTab">
       <ng-template pageTab>
         <p>
           Semantic tools for AI agents using Taiga UI applications. Update Angular state rather than

@@ -1,5 +1,5 @@
 export const SIGNAL_FORM_EXAMPLE = {
-    TypeScript: `import {signal} from '@angular/core';
+  TypeScript: `import {signal} from '@angular/core';
 import {email, form, minLength, required, validate} from '@angular/forms/signals';
 
 // In your component:
@@ -29,7 +29,7 @@ employeeForm = form(
 
 // In application providers:
 provideExperimentalWebMcpForms();`,
-    HTML: `<form [formRoot]="employeeForm">
+  HTML: `<form [formRoot]="employeeForm">
   <tui-textfield>
     <input tuiInput [formField]="employeeForm.fullName" />
   </tui-textfield>
@@ -42,10 +42,10 @@ provideExperimentalWebMcpForms();`,
   </tui-textfield>
   <button tuiButton type="submit">Save draft</button>
 </form>`,
-  };
+};
 
 export const TABLE_EXAMPLE = {
-    TypeScript: `import {provideExperimentalWebMcpTools, inject} from '@angular/core';
+  TypeScript: `import {provideExperimentalWebMcpTools, inject} from '@angular/core';
 import {tuiWebMcpFilterTool} from '@taiga-ui-labs/webmcp';
 
 provideExperimentalWebMcpTools([
@@ -55,8 +55,8 @@ provideExperimentalWebMcpTools([
     setQuery: (query) => inject(EmployeesState).query.set(query),
   }),
 ]);`,
-    HTML: `<tui-textfield>
+  HTML: `<tui-textfield>
   <input tuiInput [ngModel]="state.query()"
     (ngModelChange)="state.query.set($event)" />
 </tui-textfield>`,
-  };
+};
