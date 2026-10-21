@@ -7,41 +7,89 @@
           tuiInput
           placeholder="Search by name or team"
           [ngModel]="state.query()"
-          (ngModelChange)="state.query.set($event)"
+          (ngModelChange)="state.setQuery($event)"
         />
       </tui-textfield>
-      <span class="demo-meta">The input and WebMCP tool share the same Angular signal.</span>
+      <span class="demo-meta">The UI and WebMCP tools share the same Angular signals.</span>
+      <table tuiTable>
+        <thead>
+          <tr>
+            <th tuiTh>
+              <button
+                tuiButton
+                appearance="outline"
+                size="xs"
+                type="button"
+                (click)="
+                  state.setSort({
+                    column: 'name',
+                    direction: state.sortDirection() === 'asc' ? 'desc' : 'asc',
+                  })
+                "
+              >
+                Name
+              </button>
+            </th>
+            <th tuiTh>
+              <button
+                tuiButton
+                appearance="outline"
+                size="xs"
+                type="button"
+                (click)="
+                  state.setSort({
+                    column: 'team',
+                    direction: state.sortDirection() === 'asc' ? 'desc' : 'asc',
+                  })
+                "
+              >
+                Team
+              </button>
+            </th>
+            <th tuiTh>Selection</th>
+          </tr>
+        </thead>
+        <tbody tuiTbody>
+          @for (employee of state.visibleEmployees(); track employee.id) {
+            <tr>
+              <td tuiTd>{{ employee.name }}</td>
+              <td tuiTd>{{ employee.team }}</td>
+              <td tuiTd>
+                <button
+                  tuiButton
+                  size="xs"
+                  type="button"
+                  [appearance]="state.selectedId() === employee.id ? 'primary' : 'outline'"
+                  (click)="state.selectedId.set(employee.id)"
+                >
+                  {{ state.selectedId() === employee.id ? 'Selected' : 'Select' }}
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td tuiTd colspan="3">No matching employees.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <tui-table-pagination
+        [page]="state.page()"
+        [size]="state.size()"
+        [items]="pageSizes"
+        [total]="state.filteredEmployees().length"
+        (paginationChange)="state.setPagination($event)"
+      />
+      <p class="demo-muted">
+        Sorted by: {{ state.sortColumn() }} ({{ state.sortDirection() }}). Selected:
+        {{ state.selectedEmployee()?.name ?? 'Nobody' }}
+      </p>
     </div>
-    <ul class="demo-list">
-      @for (employee of state.filteredEmployees(); track employee.id) {
-        <li>
-          <div>
-            <strong>{{ employee.name }}</strong>
-            <div class="demo-muted">{{ employee.team }} · {{ employee.id }}</div>
-          </div>
-          <button
-            tuiButton
-            type="button"
-            size="s"
-            [appearance]="state.selectedId() === employee.id ? 'primary' : 'outline'"
-            (click)="state.selectedId.set(employee.id)"
-          >
-            {{ state.selectedId() === employee.id ? 'Selected' : 'Select' }}
-          </button>
-        </li>
-      } @empty {
-        <li class="demo-muted">No employees match the filter.</li>
-      }
-    </ul>
-    <p class="demo-muted">
-      Selected: <strong>{{ state.selectedEmployee()?.name ?? 'Nobody' }}</strong>
-    </p>
   </section>
   <section class="demo-panel">
     <h3>WebMCP · Tool playground</h3>
     <p class="demo-muted">
-      These controls call the same descriptors registered with Angular WebMCP. No AI client or
-      experimental browser flag is required for this playground.
+      Invoke the same descriptors registered with Angular WebMCP. Agent-free manual testing.
     </p>
     <div class="demo-stack">
       <label for="filter-tool">filterDemoEmployees</label>
@@ -52,18 +100,53 @@
         (ngModelChange)="filterInput.set($event)"
       />
       <button tuiButton size="m" type="button" (click)="filter()">Run filter tool</button>
-      <label for="select-tool">selectDemoEmployee (stable ID)</label>
+      <label for="sort-column">sortDemoEmployees</label>
+      <select id="sort-column" [ngModel]="sortColumn()" (ngModelChange)="sortColumn.set($event)">
+        <option value="name">Name</option>
+        <option value="team">Team</option>
+      </select>
+      <select
+        aria-label="Sort direction"
+        [ngModel]="sortDirection()"
+        (ngModelChange)="sortDirection.set($event)"
+      >
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <button tuiButton size="m" appearance="outline" type="button" (click)="sort()">
+        Run sort tool
+      </button>
+      <label for="page-number">paginateDemoEmployees · page (zero-based)</label>
+      <input
+        id="page-number"
+        type="number"
+        min="0"
+        [ngModel]="pageInput()"
+        (ngModelChange)="pageInput.set($event)"
+      />
+      <select
+        aria-label="Page size"
+        [ngModel]="sizeInput()"
+        (ngModelChange)="sizeInput.set($event)"
+      >
+        <option [ngValue]="2">2 items</option>
+        <option [ngValue]="4">4 items</option>
+      </select>
+      <button tuiButton size="m" appearance="outline" type="button" (click)="paginate()">
+        Run pagination tool
+      </button>
+      <label for="select-tool">selectDemoEmployee · stable ID (current page)</label>
       <input
         id="select-tool"
         type="text"
         [ngModel]="selectionInput()"
         (ngModelChange)="selectionInput.set($event)"
       />
-      <button tuiButton size="m" type="button" appearance="outline" (click)="select()">
+      <button tuiButton size="m" appearance="outline" type="button" (click)="select()">
         Run selection tool
       </button>
-      <button tuiButton size="m" type="button" appearance="outline" (click)="read()">
-        Read visible employees
+      <button tuiButton size="m" appearance="outline" type="button" (click)="read()">
+        Read current table state
       </button>
       <div class="demo-muted">Last tool response</div>
       <pre class="demo-result" aria-live="polite">{{ result() }}</pre>
