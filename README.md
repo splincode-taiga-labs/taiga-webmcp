@@ -21,7 +21,7 @@ npm start
 
 Open http://localhost:4200/#/webmcp to see the **@taiga-ui/addon-doc** demo. The playground simulates direct tool invocations, so you can try it without an AI agent. With native WebMCP support (or a polyfill), browser agents can discover the same registered tools.
 
-`npm run build:demo` builds the documentation site for static hosting.
+`npm run build:demo` builds the documentation site for static hosting. The demo copies SVG icons from the `@taiga-ui/icons` package into `assets/taiga-ui/icons` and ships its own local logo; both work when hosted under the GitHub Pages repository subpath without relying on an external CDN.
 
 ## Formatting
 

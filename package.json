@@ -38,7 +38,8 @@
     "@taiga-ui/styles": "5.28.0",
     "@taiga-ui/legacy": "5.28.0",
     "@angular/cdk": "22.2.2",
-    "@taiga-ui/addon-table": "5.28.0"
+    "@taiga-ui/addon-table": "5.28.0",
+    "@taiga-ui/icons": "5.28.0"
   },
   "devDependencies": {
     "@angular/build": "22.2.3",

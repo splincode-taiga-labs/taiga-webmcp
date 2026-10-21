@@ -5,7 +5,12 @@ import {
   withHashLocation,
   type Routes,
 } from '@angular/router';
-import {TUI_DOC_DEFAULT_TABS, TUI_DOC_PAGES, TUI_DOC_TITLE} from '@taiga-ui/addon-doc';
+import {
+  TUI_DOC_DEFAULT_TABS,
+  TUI_DOC_LOGO,
+  TUI_DOC_PAGES,
+  TUI_DOC_TITLE,
+} from '@taiga-ui/addon-doc';
 import {provideTaiga} from '@taiga-ui/core';
 import {provideHighlightOptions} from 'ngx-highlightjs';
 
@@ -35,6 +40,7 @@ export const appConfig: ApplicationConfig = {
       useValue: [{title: 'WebMCP', section: 'Examples', route: '/webmcp'}],
     },
     {provide: TUI_DOC_TITLE, useValue: 'Taiga WebMCP · '},
+    {provide: TUI_DOC_LOGO, useValue: 'assets/webmcp-logo.svg'},
     {provide: TUI_DOC_DEFAULT_TABS, useValue: ['Examples', 'API', 'Setup']},
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),

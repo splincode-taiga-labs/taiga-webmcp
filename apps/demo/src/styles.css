@@ -8,10 +8,14 @@ body {
 .demo-layout {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: 100%;
+  min-inline-size: 0;
 }
 .demo-panel {
   min-width: 0;
+  max-inline-size: 100%;
+  box-sizing: border-box;
   padding: 1.25rem;
   border: 1px solid var(--tui-border-normal);
   border-radius: 1rem;
@@ -23,6 +27,12 @@ body {
 .demo-stack {
   display: grid;
   gap: 0.75rem;
+  min-inline-size: 0;
+}
+.demo-stack > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  box-sizing: border-box;
 }
 .demo-actions {
   display: flex;
@@ -51,10 +61,17 @@ body {
 }
 .demo-result {
   margin: 0;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  box-sizing: border-box;
   padding: 0.75rem;
   border-radius: 0.5rem;
   background: var(--tui-background-neutral-1);
+  white-space: pre-wrap;
   overflow-wrap: anywhere;
+  word-break: break-word;
+  overflow-x: auto;
   font:
     0.875rem/1.5 ui-monospace,
     monospace;
@@ -62,4 +79,10 @@ body {
 .demo-meta {
   font-size: 0.75rem;
   color: var(--tui-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .demo-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

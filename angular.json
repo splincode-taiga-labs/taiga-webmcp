@@ -23,7 +23,19 @@
               "node_modules/@taiga-ui/legacy/styles/taiga-ui-global.less",
               "apps/demo/src/styles.css"
             ],
-            "baseHref": "./"
+            "baseHref": "./",
+            "assets": [
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/@taiga-ui/icons/src",
+                "output": "assets/taiga-ui/icons"
+              },
+              {
+                "glob": "*.svg",
+                "input": "apps/demo/public",
+                "output": "assets"
+              }
+            ]
           },
           "configurations": {
             "production": {
