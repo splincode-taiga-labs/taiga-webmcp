@@ -59,8 +59,9 @@ export class WebMcpSignalForm {
           'Validate and save a local employee draft in the Taiga WebMCP demo. Does not contact a server.',
       },
       submission: {
-        action: async (field) => {
+        action: (field) => {
           this.lastSaved.set({...field().value()});
+          return Promise.resolve();
         },
       },
     },
