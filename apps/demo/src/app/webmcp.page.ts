@@ -39,7 +39,11 @@ import {WebMcpSignalForm} from './signal-form.component';
         <p><code>tuiWebMcpReadTool</code> exposes explicit read-only application data.</p>
         <p><code>tuiWebMcpSortTool</code> sorts only approved columns.</p>
         <p><code>tuiWebMcpPaginationTool</code> validates page bounds and sizes.</p>
-        <p><code>provideExperimentalWebMcpForms</code> and <code>experimentalWebMcpTool</code> are native Angular APIs. Use them to expose validated Signal Forms rather than wrapping every input.</p>
+        <p>
+          <code>provideExperimentalWebMcpForms</code> and <code>experimentalWebMcpTool</code> are
+          native Angular APIs. Use them to expose validated Signal Forms rather than wrapping every
+          input.
+        </p>
         <p>
           Each helper returns a descriptor for Angular's
           <code>provideExperimentalWebMcpTools</code>. Nothing is registered automatically.
@@ -48,11 +52,14 @@ import {WebMcpSignalForm} from './signal-form.component';
       <ng-template pageTab="Setup">
         <h2>Browser and security</h2>
         <p>
-          This playground uses TuiTable, TuiTablePagination, TuiInput and TuiSelect. It can be used manually in any
-          supported Angular browser. Real AI agent access requires browser WebMCP support or a
-          compatible polyfill.
+          This playground uses TuiTable, TuiTablePagination, TuiInput and TuiSelect. It can be used
+          manually in any supported Angular browser. Real AI agent access requires browser WebMCP
+          support or a compatible polyfill.
         </p>
-        <p>The Signal Forms example stores drafts in memory only; a real application must authorize and validate mutations on the server.</p>
+        <p>
+          The Signal Forms example stores drafts in memory only; a real application must authorize
+          and validate mutations on the server.
+        </p>
         <p>
           Tools are discoverable, not permission checks. Authorize access to data, validate all
           arguments, and require explicit user confirmation for mutations.
