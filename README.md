@@ -25,7 +25,7 @@ Open http://localhost:4200/#/webmcp to see the **@taiga-ui/addon-doc** demo. The
 
 ## Formatting
 
-This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CSS, Markdown, and GitHub Actions YAML. Run `npm run format` to format supported files and `npm run format:check` to verify them. CI enforces the formatting check. ESLint applies recommended Angular and TypeScript rules separately from Prettier; use `npm run lint` to check code and `npm run lint:fix` for safe automatic fixes.
+This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CSS, Markdown, and GitHub Actions YAML. Run `npm run format` to format supported files and `npm run format:check` to verify them. CI enforces the formatting check. ESLint applies Angular rules and type-aware TypeScript rules with TypeScript's project service, independently of Prettier. Run `npm run lint` to check code and `npm run lint:fix` for safe automatic fixes. Type-aware rules check promise handling and unsafe uses of types without adding another compilation step.
 
 ## API
 

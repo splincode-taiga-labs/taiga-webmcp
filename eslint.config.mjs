@@ -11,9 +11,15 @@ export default tseslint.config(
     files: ['**/*.ts'],
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
       ...angular.configs.tsRecommended,
     ],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
     processor: angular.processInlineTemplates,
     rules: {
       '@angular-eslint/component-selector': [
