@@ -16,6 +16,7 @@ import {provideTaiga} from '@taiga-ui/core';
 import {provideHighlightOptions} from 'ngx-highlightjs';
 
 import {FILTER_TOOL, PAGINATION_TOOL, READ_TOOL, SELECT_TOOL, SORT_TOOL} from './demo-tools';
+import {DOC_PAGES} from './docs-navigation';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'webmcp'},
@@ -23,6 +24,26 @@ const routes: Routes = [
     path: 'webmcp',
     data: {title: 'WebMCP'},
     loadComponent: () => import('./webmcp.page').then((m) => m.WebMcpPage),
+    children: [
+      {
+        path: 'API',
+        loadComponent: () => import('./webmcp-tab.component').then((m) => m.WebMcpTab),
+      },
+      {
+        path: 'Setup',
+        loadComponent: () => import('./webmcp-tab.component').then((m) => m.WebMcpTab),
+      },
+    ],
+  },
+  {
+    path: 'table-tools',
+    data: {title: 'Table tools'},
+    loadComponent: () => import('./table-tools.page').then((m) => m.TableToolsPage),
+  },
+  {
+    path: 'signal-forms',
+    data: {title: 'Signal Forms'},
+    loadComponent: () => import('./signal-forms.page').then((m) => m.SignalFormsPage),
   },
 ];
 
@@ -39,7 +60,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalWebMcpTools([PAGINATION_TOOL]),
     {
       provide: TUI_DOC_PAGES,
-      useValue: [{title: 'WebMCP', section: 'Examples', route: '/webmcp'}],
+      useValue: DOC_PAGES,
     },
     {provide: TUI_DOC_TITLE, useValue: 'Taiga WebMCP · '},
     {provide: TUI_DOC_LOGO, useValue: 'assets/webmcp-logo.svg'},

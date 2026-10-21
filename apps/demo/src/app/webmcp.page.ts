@@ -1,13 +1,22 @@
-import {Component} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import {filter, startWith} from 'rxjs';
 import {TuiAddonDoc} from '@taiga-ui/addon-doc';
 
 import {WebMcpPlayground} from './playground.component';
 import {WebMcpSignalForm} from './signal-form.component';
+import {webMcpTabIndex} from './docs-navigation';
+import {SIGNAL_FORM_EXAMPLE, TABLE_EXAMPLE} from './webmcp-examples';
 
 @Component({
-  imports: [TuiAddonDoc, WebMcpPlayground, WebMcpSignalForm],
+  imports: [RouterOutlet, TuiAddonDoc, WebMcpPlayground, WebMcpSignalForm],
   template: `
-    <tui-doc-page header="WebMCP" package="@taiga-ui-labs/webmcp">
+    <tui-doc-page
+      header="WebMCP"
+      package="@taiga-ui-labs/webmcp"
+      [(activeItemIndex)]="activeTab"
+    >
       <ng-template pageTab>
         <p>
           Semantic tools for AI agents using Taiga UI applications. Update Angular state rather than
@@ -72,69 +81,24 @@ import {WebMcpSignalForm} from './signal-form.component';
         </p>
       </ng-template>
     </tui-doc-page>
+    <router-outlet />
   `,
 })
 export class WebMcpPage {
-  protected readonly formExample = {
-    TypeScript: `import {signal} from '@angular/core';
-import {email, form, minLength, required, validate} from '@angular/forms/signals';
+  private readonly route = inject(ActivatedRoute);
+  protected readonly activeTab = signal(0);
+  protected readonly example = TABLE_EXAMPLE;
+  protected readonly formExample = SIGNAL_FORM_EXAMPLE;
 
-// In your component:
-model = signal({fullName: '', email: '', team: ''});
-employeeForm = form(
-  this.model,
-  (path) => {
-    required(path.fullName);
-    minLength(path.fullName, 2);
-    required(path.email);
-    email(path.email);
-    required(path.team);
-    validate(path.team, ({value}) =>
-      ['Platform', 'Infrastructure', 'Design Systems'].includes(value())
-        ? null
-        : {kind: 'teamNotAllowed', message: 'Choose an allowed team.'},
-    );
-  },
-  {
-    experimentalWebMcpTool: {
-      name: 'saveDemoEmployeeDraft',
-      description: 'Validate and save a local employee draft.',
-    },
-    submission: {action: (field) => { this.lastSaved.set(field().value()); return Promise.resolve(); }},
-  },
-);
-
-// In application providers:
-provideExperimentalWebMcpForms();`,
-    HTML: `<form [formRoot]="employeeForm">
-  <tui-textfield>
-    <input tuiInput [formField]="employeeForm.fullName" />
-  </tui-textfield>
-  <tui-textfield>
-    <input tuiInput type="email" [formField]="employeeForm.email" />
-  </tui-textfield>
-  <tui-textfield tuiChevron>
-    <input tuiSelect [formField]="employeeForm.team" />
-    <tui-data-list-wrapper *tuiDropdown [items]="teams" />
-  </tui-textfield>
-  <button tuiButton type="submit">Save draft</button>
-</form>`,
-  };
-
-  protected readonly example = {
-    TypeScript: `import {provideExperimentalWebMcpTools, inject} from '@angular/core';
-import {tuiWebMcpFilterTool} from '@taiga-ui-labs/webmcp';
-
-provideExperimentalWebMcpTools([
-  tuiWebMcpFilterTool({
-    name: 'filterEmployees',
-    description: 'Filter employees by name',
-    setQuery: (query) => inject(EmployeesState).query.set(query),
-  }),
-]);`,
-    HTML: `<tui-textfield>
-  <input tuiInput [ngModel]="state.query()"
-    (ngModelChange)="state.query.set($event)" />
-</tui-textfield>`,
-  };
+  constructor() {
+    inject(Router)
+      .events.pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        startWith(null),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => {
+        this.activeTab.set(webMcpTabIndex(this.route.firstChild?.snapshot.routeConfig?.path));
+      });
+  }
 }
