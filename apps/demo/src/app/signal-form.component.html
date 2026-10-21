@@ -1,0 +1,67 @@
+<div class="demo-layout">
+  <section class="demo-panel">
+    <h3>Taiga UI · Signal Form</h3>
+    <p class="demo-muted">
+      Fill this form manually or invoke saveDemoEmployeeDraft through browser WebMCP.
+      Both paths use the same validation and submission action.
+    </p>
+    <form [formRoot]="employeeForm" class="demo-stack">
+      <label for="draft-full-name">Full name</label>
+      <tui-textfield>
+        <input id="draft-full-name" tuiInput placeholder="Ada Lovelace" [formField]="employeeForm.fullName" />
+      </tui-textfield>
+      @if (employeeForm.fullName().touched() && employeeForm.fullName().invalid()) {
+        <div class="demo-error" role="alert">
+          @for (error of employeeForm.fullName().errors(); track error.kind) {
+            <div>{{ error.message }}</div>
+          }
+        </div>
+      }
+
+      <label for="draft-email">Email</label>
+      <tui-textfield>
+        <input id="draft-email" tuiInput type="email" placeholder="ada@example.com" [formField]="employeeForm.email" />
+      </tui-textfield>
+      @if (employeeForm.email().touched() && employeeForm.email().invalid()) {
+        <div class="demo-error" role="alert">
+          @for (error of employeeForm.email().errors(); track error.kind) {
+            <div>{{ error.message }}</div>
+          }
+        </div>
+      }
+
+      <label for="draft-team">Team</label>
+      <tui-textfield tuiChevron>
+        <input id="draft-team" tuiSelect placeholder="Choose a team" [formField]="employeeForm.team" />
+        <tui-data-list-wrapper *tuiDropdown [items]="teams" />
+      </tui-textfield>
+      @if (employeeForm.team().touched() && employeeForm.team().invalid()) {
+        <div class="demo-error" role="alert">
+          @for (error of employeeForm.team().errors(); track error.kind) {
+            <div>{{ error.message }}</div>
+          }
+        </div>
+      }
+
+      <button tuiButton type="submit" [disabled]="employeeForm().submitting()">
+        {{ employeeForm().submitting() ? 'Saving...' : 'Save draft' }}
+      </button>
+    </form>
+  </section>
+  <section class="demo-panel">
+    <h3>WebMCP · Native form tool</h3>
+    <div class="demo-stack">
+      <p class="demo-muted">Angular generates the tool schema from the Signal Form. No separate tools per input.</p>
+      <strong>saveDemoEmployeeDraft</strong>
+      <div class="demo-muted">Fields: fullName, email, team</div>
+      <div class="demo-muted">Team is checked against the application's allowed values.</div>
+      <div class="demo-muted">Submission stores a local draft only. Nothing is sent to a backend.</div>
+      <h4>Last submitted draft</h4>
+      @if (lastSaved(); as draft) {
+        <pre class="demo-result" aria-live="polite">{{ draft | json }}</pre>
+      } @else {
+        <p class="demo-muted" aria-live="polite">No draft submitted yet.</p>
+      }
+    </div>
+  </section>
+</div>

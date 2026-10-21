@@ -86,3 +86,8 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.demo-error {
+  color: var(--tui-text-negative);
+  font: var(--tui-typography-body-s);
+}

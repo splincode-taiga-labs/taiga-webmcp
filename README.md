@@ -55,6 +55,19 @@ export const providers = [
 
 The corresponding Taiga UI input binds to the same state. In real applications, locate tools at app/route injector scope. For route-level tools enable `withAutoCleanupInjectors()`.
 
+## Signal Forms integration
+
+The demo includes a separate **Signal Forms + Taiga UI** example using `tuiInput`, `tuiSelect`, `FormField`, and `FormRoot`. Angular's experimental WebMCP integration generates `saveDemoEmployeeDraft` automatically from the form fields, validates inputs (including an allowed team list), and invokes the same submission action as the UI. No extra library helper is necessary. The demonstration saves only an in-memory draft, never contacts a server, and should not be confused with a production authorization boundary.
+
+```ts
+import {provideExperimentalWebMcpForms} from '@angular/forms/signals';
+
+// In application providers:
+provideExperimentalWebMcpForms();
+```
+
+Add `experimentalWebMcpTool` and a `submission.action` to a Signal Form. Only one instance of the opted-in form should be mounted at a time, and real write operations require server-side authorization and, when consequential, actual human confirmation.
+
 ## Taiga UI table integration
 
 The interactive `@taiga-ui/addon-doc` playground uses actual `TuiTable` and `TuiTablePagination` from `@taiga-ui/addon-table`. Search, sorting, selection and pagination act on the **same Angular signals**, whether invoked from the UI or an AI agent. Names and page sizes are explicitly allowlisted, and pagination is bounded by the live filtered count.
