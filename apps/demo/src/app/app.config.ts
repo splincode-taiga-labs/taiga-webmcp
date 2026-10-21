@@ -5,7 +5,12 @@ import {
   withHashLocation,
   type Routes,
 } from '@angular/router';
-import {TUI_DOC_DEFAULT_TABS, TUI_DOC_LOGO, TUI_DOC_PAGES, TUI_DOC_TITLE} from '@taiga-ui/addon-doc';
+import {
+  TUI_DOC_DEFAULT_TABS,
+  TUI_DOC_LOGO,
+  TUI_DOC_PAGES,
+  TUI_DOC_TITLE,
+} from '@taiga-ui/addon-doc';
 import {provideTaiga} from '@taiga-ui/core';
 import {provideHighlightOptions} from 'ngx-highlightjs';
 
