@@ -122,7 +122,12 @@ describe('WebMCP tools', () => {
   });
 
   it('rejects invalid pagination configuration', () => {
-    const config = {name: 'paginate', description: 'Change page', getTotal: () => 0, setPagination: vi.fn()};
+    const config = {
+      name: 'paginate',
+      description: 'Change page',
+      getTotal: () => 0,
+      setPagination: vi.fn(),
+    };
     expect(() => tuiWebMcpPaginationTool({...config, pageSizes: []})).toThrow();
     expect(() => tuiWebMcpPaginationTool({...config, pageSizes: [2, 2]})).toThrow();
     expect(() => tuiWebMcpPaginationTool({...config, pageSizes: [0]})).toThrow();

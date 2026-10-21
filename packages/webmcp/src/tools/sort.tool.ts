@@ -5,7 +5,11 @@ import type {TuiWebMcpSortOptions} from './types';
 export function tuiWebMcpSortTool(config: TuiWebMcpSortOptions) {
   const columns = [...config.columns];
 
-  if (!columns.length || columns.some((column) => !column) || new Set(columns).size !== columns.length) {
+  if (
+    !columns.length ||
+    columns.some((column) => !column) ||
+    new Set(columns).size !== columns.length
+  ) {
     throw new Error('columns must contain unique, non-empty names');
   }
 

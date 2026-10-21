@@ -39,8 +39,9 @@ import {WebMcpPlayground} from './playground.component';
       <ng-template pageTab="Setup">
         <h2>Browser and security</h2>
         <p>
-          This playground uses TuiTable and TuiTablePagination and can be used manually in any supported Angular browser. Real AI agent
-          access requires browser WebMCP support or a compatible polyfill.
+          This playground uses TuiTable and TuiTablePagination and can be used manually in any
+          supported Angular browser. Real AI agent access requires browser WebMCP support or a
+          compatible polyfill.
         </p>
         <p>
           Tools are discoverable, not permission checks. Authorize access to data, validate all
