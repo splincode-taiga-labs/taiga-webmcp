@@ -1,4 +1,5 @@
 import {type ApplicationConfig, provideExperimentalWebMcpTools} from '@angular/core';
+import {provideExperimentalWebMcpForms} from '@angular/forms/signals';
 import {
   provideRouter,
   withAutoCleanupInjectors,
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation(), withAutoCleanupInjectors()),
     provideTaiga(),
+    provideExperimentalWebMcpForms(),
     // Keep descriptors in separate providers for precise JSON Schema inference.
     provideExperimentalWebMcpTools([FILTER_TOOL]),
     provideExperimentalWebMcpTools([SELECT_TOOL]),
