@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="176" height="40" viewBox="0 0 176 40" role="img" aria-labelledby="title">
+  <title id="title">Taiga WebMCP</title>
+  <rect x="1" y="2" width="36" height="36" rx="10" fill="#526ed3"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
+    <path d="m13 16-5 4 5 4"/>
+    <path d="m25 16 5 4-5 4"/>
+    <path d="m22 13-4 14"/>
+  </g>
+  <text x="48" y="27" fill="#1b1f3b" font-family="Arial, sans-serif" font-size="21" font-weight="700">WebMCP</text>
+</svg>

@@ -19,3 +19,8 @@ jobs:
       - run: npm run build:lib
       - run: npm pack --dry-run ./dist/webmcp
       - run: npm run build:demo
+      - name: Verify documentation assets
+        run: |
+          test -f dist/demo/browser/assets/webmcp-logo.svg
+          test -f dist/demo/browser/assets/taiga-ui/icons/search.svg
+          test -f dist/demo/browser/assets/taiga-ui/icons/chevron-down.svg
