@@ -74,7 +74,7 @@ test('the browser API rejects invalid arguments without mutating UI state', asyn
 
   await expect(page.locator('input[placeholder="Search by name or team"]')).toHaveValue('');
 
-  const denied = await page.webmcp.callTool('selectDemoEmployee', {id: 'emp-999'});
+  const denied: unknown = await page.webmcp.callTool('selectDemoEmployee', {id: 'emp-999'});
   expect(denied).toMatchObject({isError: true});
   await expect(page.getByText('Selected: Nobody')).toBeVisible();
 });
