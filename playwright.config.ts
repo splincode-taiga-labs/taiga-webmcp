@@ -14,7 +14,15 @@ export default defineConfig({
     viewport: {width: 1280, height: 900},
     reducedMotion: 'reduce',
   },
-  projects: [{name: 'chromium', use: {...devices['Desktop Chrome']}}],
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {args: ['--enable-features=WebMCP']},
+      },
+    },
+  ],
   webServer: {
     command: 'npm run serve:demo',
     url: 'http://127.0.0.1:4173',
