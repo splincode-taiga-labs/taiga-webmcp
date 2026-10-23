@@ -16,6 +16,9 @@ npm run format:check
 npm run lint
 npm test
 npm run build:lib
+npm run build:demo
+npx playwright install chromium
+npm run test:e2e
 npm start
 ```
 
@@ -90,3 +93,9 @@ For forms, Angular Signal Forms can already expose forms directly with `provideE
 - [Taiga UI addon-doc](https://github.com/taiga-family/taiga-ui/tree/main/projects/addon-doc)
 
 Licensed under Apache-2.0.
+
+## Browser smoke tests
+
+`npm run test:e2e` runs Chromium against the **production build** in `dist/demo/browser`. Playwright starts a local static server at `127.0.0.1:4173`. The tests check deep-linkable API/Setup tabs, browser history, sidebar examples, logo/icon loading, tool output overflow, and mobile layout. CI installs Chromium and retains Playwright artifacts when failures occur.
+
+Run `npm run build:demo` before `npm run test:e2e`; these tests are not included in the unit-test command `npm test`.
