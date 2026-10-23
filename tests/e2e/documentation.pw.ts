@@ -2,7 +2,8 @@ import {expect, test, type Locator} from '@playwright/test';
 
 async function openSidebarExample(navigation: Locator, name: string): Promise<void> {
   const section = navigation.getByRole('button', {name: 'Examples', exact: true});
-  const link = navigation.getByRole('link', {name, exact: true});
+  // tuiLink may insert invisible word-joiners into accessible names.
+  const link = navigation.getByRole('link', {name: new RegExp(name)});
 
   await expect(section).toBeVisible();
 
