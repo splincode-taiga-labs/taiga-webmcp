@@ -1,0 +1,28 @@
+name: Format native WebMCP tests (temporary)
+on:
+  push:
+    branches: [test/webmcp-browser-integration]
+permissions:
+  contents: write
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run format
+      - name: Commit formatting and remove temporary workflow
+        run: |
+          git rm .github/workflows/webmcp-tests-bootstrap.yml
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --cached --quiet; then
+            git commit -m "style: format native WebMCP integration tests"
+            git push
+          fi
