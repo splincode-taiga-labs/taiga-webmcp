@@ -34,22 +34,16 @@ test('sidebar examples open their own pages', async ({page}) => {
   await page.goto('/#/webmcp');
 
   const navigation = page.locator('tui-doc-navigation.tui-doc-navigation');
+  await expect(navigation.getByRole('link', {name: 'WebMCP', exact: true})).toBeVisible();
+
   const tableLink = navigation.getByRole('link', {name: 'Table tools', exact: true});
-
-  if (!(await tableLink.isVisible())) {
-    await navigation.getByRole('button', {name: 'Examples', exact: true}).click();
-  }
-
+  await expect(tableLink).toBeVisible();
   await tableLink.click();
   await expect(page).toHaveURL(/\/#\/table-tools$/);
   await expect(page.getByRole('heading', {name: 'Interactive employee table'})).toBeVisible();
 
   const signalFormsLink = navigation.getByRole('link', {name: 'Signal Forms', exact: true});
-
-  if (!(await signalFormsLink.isVisible())) {
-    await navigation.getByRole('button', {name: 'Examples', exact: true}).click();
-  }
-
+  await expect(signalFormsLink).toBeVisible();
   await signalFormsLink.click();
   await expect(page).toHaveURL(/\/#\/signal-forms$/);
   await expect(page.getByRole('heading', {name: 'Validated employee draft'})).toBeVisible();
