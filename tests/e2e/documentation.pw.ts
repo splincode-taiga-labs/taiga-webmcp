@@ -1,4 +1,23 @@
-import {expect, test} from '@playwright/test';
+import {expect, test, type Locator} from '@playwright/test';
+
+async function openSidebarExample(navigation: Locator, name: string): Promise<void> {
+  const section = navigation.getByRole('button', {name: 'Examples', exact: true});
+  const link = navigation.getByRole('link', {name, exact: true});
+
+  await expect(section).toBeVisible();
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      await expect(link).toBeVisible({timeout: 1000});
+      break;
+    } catch {
+      await section.click();
+    }
+  }
+
+  await expect(link).toBeVisible();
+  await link.click();
+}
 
 test('API and Setup tabs support clicks, deep links and browser history', async ({page}) => {
   await page.goto('/#/webmcp');
@@ -34,17 +53,11 @@ test('sidebar examples open their own pages', async ({page}) => {
   await page.goto('/#/webmcp');
 
   const navigation = page.locator('tui-doc-navigation.tui-doc-navigation');
-  await expect(navigation.getByRole('link', {name: 'WebMCP', exact: true})).toBeVisible();
-
-  const tableLink = navigation.getByRole('link', {name: 'Table tools', exact: true});
-  await expect(tableLink).toBeVisible();
-  await tableLink.click();
+  await openSidebarExample(navigation, 'Table tools');
   await expect(page).toHaveURL(/\/#\/table-tools$/);
   await expect(page.getByRole('heading', {name: 'Interactive employee table'})).toBeVisible();
 
-  const signalFormsLink = navigation.getByRole('link', {name: 'Signal Forms', exact: true});
-  await expect(signalFormsLink).toBeVisible();
-  await signalFormsLink.click();
+  await openSidebarExample(navigation, 'Signal Forms');
   await expect(page).toHaveURL(/\/#\/signal-forms$/);
   await expect(page.getByRole('heading', {name: 'Validated employee draft'})).toBeVisible();
 
