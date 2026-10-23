@@ -94,6 +94,12 @@ For forms, Angular Signal Forms can already expose forms directly with `provideE
 
 Licensed under Apache-2.0.
 
+## Browser WebMCP integration tests
+
+Playwright 1.64+ runs Chromium with the experimental `--enable-features=WebMCP` flag. Alongside documentation smoke checks, the E2E suite discovers application-registered tools through `page.webmcp.tools()` and calls them through `page.webmcp.callTool()`. The tests assert that filter, sort, pagination and selection update the real Taiga UI and that Signal Forms tools are removed when the form is unmounted.
+
+This tests the **browser's WebMCP API** and Angular's registration lifecycle, not just direct execution of descriptor callbacks. The browser API remains experimental and may require updates as specifications evolve. Do not enable the experimental feature by default in production clients.
+
 ## Browser smoke tests
 
 `npm run test:e2e` runs Chromium against the **production build** in `dist/demo/browser`. Playwright starts a local static server at `127.0.0.1:4173`. The tests check deep-linkable API/Setup tabs, browser history, sidebar examples, logo/icon loading, tool output overflow, and mobile layout. CI installs Chromium and retains Playwright artifacts when failures occur.
