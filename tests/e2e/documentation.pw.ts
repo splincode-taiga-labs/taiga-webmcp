@@ -25,7 +25,9 @@ test('API and Setup tabs support clicks, deep links and browser history', async 
 
   await page.getByRole('link', {name: 'Examples', exact: true}).click();
   await expect(page).toHaveURL(/\/#\/webmcp$/);
-  await expect(page.getByRole('heading', {name: 'Employees · Search, sorting, pagination and selection'})).toBeVisible();
+  await expect(
+    page.getByRole('heading', {name: 'Employees · Search, sorting, pagination and selection'}),
+  ).toBeVisible();
 });
 
 test('sidebar examples open their own pages', async ({page}) => {
@@ -49,9 +51,14 @@ test('the built demo serves its logo and Taiga UI icons', async ({page, request}
 
   const logo = page.locator('header .t-logo img');
   await expect(logo).toBeVisible();
-  await expect.poll(() => logo.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect
+    .poll(() => logo.evaluate((image: HTMLImageElement) => image.naturalWidth))
+    .toBeGreaterThan(0);
 
-  for (const path of ['/assets/taiga-ui/icons/search.svg', '/assets/taiga-ui/icons/chevron-down.svg']) {
+  for (const path of [
+    '/assets/taiga-ui/icons/search.svg',
+    '/assets/taiga-ui/icons/chevron-down.svg',
+  ]) {
     const response = await request.get(path);
     expect(response.ok(), path).toBe(true);
     expect(await response.text()).toContain('<svg');
