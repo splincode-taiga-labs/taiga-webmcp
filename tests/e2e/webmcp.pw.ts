@@ -58,16 +58,25 @@ test('the browser API rejects invalid arguments without mutating UI state', asyn
   await page.goto('/#/table-tools');
   await expect.poll(async () => (await page.webmcp.tools()).length).toBeGreaterThanOrEqual(5);
 
+  let rejectedByBrowser = false;
+  let result: unknown;
+
   try {
-    const result = await page.webmcp.callTool('filterDemoEmployees', {
-      query: 42,
-    });
-    expect(result).toMatchObject({isError: true});
+    result = await page.webmcp.callTool('filterDemoEmployees', {query: 42});
   } catch {
-    // Native JSON Schema validation may reject the call before Angular executes it.
+    // The browser may enforce JSON Schema before invoking the Angular handler.
+    rejectedByBrowser = true;
+  }
+
+  if (!rejectedByBrowser) {
+    expect(result).toMatchObject({isError: true});
   }
 
   await expect(page.locator('input[placeholder="Search by name or team"]')).toHaveValue('');
+
+  const denied = await page.webmcp.callTool('selectDemoEmployee', {id: 'emp-999'});
+  expect(denied).toMatchObject({isError: true});
+  await expect(page.getByText('Selected: Nobody')).toBeVisible();
 });
 
 test('the Signal Forms tool registers only while its form is mounted', async ({page}) => {
