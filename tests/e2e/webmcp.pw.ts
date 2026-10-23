@@ -11,9 +11,9 @@ const TABLE_TOOLS = [
 test('Angular exposes the semantic table tools to the browser agent', async ({page}) => {
   await page.goto('/#/table-tools');
 
-  await expect.poll(async () => (await page.webmcp.tools()).map((tool) => tool.name)).toEqual(
-    expect.arrayContaining(TABLE_TOOLS),
-  );
+  await expect
+    .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
+    .toEqual(expect.arrayContaining(TABLE_TOOLS));
 
   const tools = await page.webmcp.tools();
   const sortTool = tools.find((tool) => tool.name === 'sortDemoEmployees');
@@ -73,14 +73,14 @@ test('the browser API rejects invalid arguments without mutating UI state', asyn
 test('the Signal Forms tool registers only while its form is mounted', async ({page}) => {
   await page.goto('/#/table-tools');
 
-  await expect.poll(async () => (await page.webmcp.tools()).map((tool) => tool.name)).not.toContain(
-    'saveDemoEmployeeDraft',
-  );
+  await expect
+    .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
+    .not.toContain('saveDemoEmployeeDraft');
 
   await page.goto('/#/signal-forms');
-  await expect.poll(async () => (await page.webmcp.tools()).map((tool) => tool.name)).toContain(
-    'saveDemoEmployeeDraft',
-  );
+  await expect
+    .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
+    .toContain('saveDemoEmployeeDraft');
 
   const result = await page.webmcp.callTool('saveDemoEmployeeDraft', {
     fullName: 'Ada Lovelace',
@@ -91,7 +91,7 @@ test('the Signal Forms tool registers only while its form is mounted', async ({p
   await expect(page.locator('.demo-result')).toContainText('ada@example.com');
 
   await page.goto('/#/table-tools');
-  await expect.poll(async () => (await page.webmcp.tools()).map((tool) => tool.name)).not.toContain(
-    'saveDemoEmployeeDraft',
-  );
+  await expect
+    .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
+    .not.toContain('saveDemoEmployeeDraft');
 });
