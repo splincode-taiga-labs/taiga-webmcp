@@ -19,7 +19,7 @@ jobs:
       - run: npm run build:lib
       - run: npm pack --dry-run ./dist/webmcp
       - run: npm run build:demo
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --only-shell chromium
       - run: npm run test:e2e
       - name: Upload Playwright reports on failure
         if: failure()

@@ -3,7 +3,7 @@ import {expect, test} from '@playwright/test';
 test('API and Setup tabs support clicks, deep links and browser history', async ({page}) => {
   await page.goto('/#/webmcp');
 
-  await expect(page.getByRole('heading', {name: 'WebMCP'})).toBeVisible();
+  await expect(page.getByRole('heading', {level: 1})).toContainText('WebMCP');
 
   await page.getByRole('link', {name: 'API', exact: true}).click();
   await expect(page).toHaveURL(/\/#\/webmcp\/API$/);
@@ -33,12 +33,24 @@ test('API and Setup tabs support clicks, deep links and browser history', async 
 test('sidebar examples open their own pages', async ({page}) => {
   await page.goto('/#/webmcp');
 
-  const navigation = page.locator('tui-doc-navigation');
-  await navigation.getByRole('link', {name: 'Table tools', exact: true}).click();
+  const navigation = page.locator('tui-doc-navigation.tui-doc-navigation');
+  const tableLink = navigation.getByRole('link', {name: 'Table tools', exact: true});
+
+  if (!(await tableLink.isVisible())) {
+    await navigation.getByRole('button', {name: 'Examples', exact: true}).click();
+  }
+
+  await tableLink.click();
   await expect(page).toHaveURL(/\/#\/table-tools$/);
   await expect(page.getByRole('heading', {name: 'Interactive employee table'})).toBeVisible();
 
-  await navigation.getByRole('link', {name: 'Signal Forms', exact: true}).click();
+  const signalFormsLink = navigation.getByRole('link', {name: 'Signal Forms', exact: true});
+
+  if (!(await signalFormsLink.isVisible())) {
+    await navigation.getByRole('button', {name: 'Examples', exact: true}).click();
+  }
+
+  await signalFormsLink.click();
   await expect(page).toHaveURL(/\/#\/signal-forms$/);
   await expect(page.getByRole('heading', {name: 'Validated employee draft'})).toBeVisible();
 
