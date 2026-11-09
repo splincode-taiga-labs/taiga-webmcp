@@ -58,6 +58,10 @@ test('sidebar examples open their own pages', async ({page}) => {
   await expect(page).toHaveURL(/\/#\/table-tools$/);
   await expect(page.getByRole('heading', {name: 'Interactive employee table'})).toBeVisible();
 
+  await openSidebarExample(navigation, 'MultiSelect');
+  await expect(page).toHaveURL(/\/#\/multi-select$/);
+  await expect(page.getByRole('heading', {name: 'Teams · Multiple selection'})).toBeVisible();
+
   await openSidebarExample(navigation, 'Signal Forms');
   await expect(page).toHaveURL(/\/#\/signal-forms$/);
   await expect(page.getByRole('heading', {name: 'Validated employee draft'})).toBeVisible();

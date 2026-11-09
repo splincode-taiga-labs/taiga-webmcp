@@ -1,0 +1,56 @@
+<div class="demo-layout">
+  <section class="demo-panel">
+    <h3>Taiga UI · MultiSelect</h3>
+    <p class="demo-muted">
+      Choose teams from the dropdown, or invoke the WebMCP tool using stable IDs. Both operations
+      update the same Angular signal.
+    </p>
+    <div class="demo-stack">
+      <tui-textfield multi tuiChevron>
+        <select
+          aria-label="Selected teams"
+          placeholder="Select teams"
+          tuiMultiSelect
+          [items]="state.teamLabels"
+          [ngModel]="state.selectedTeamLabels()"
+          (ngModelChange)="state.setSelectedTeamLabels($event)"
+        ></select>
+        <tui-input-chip *tuiItem />
+      </tui-textfield>
+      <p class="demo-muted" data-testid="selected-team-ids">
+        Selected IDs: {{ state.selectedTeamIds().join(', ') || 'None' }}
+      </p>
+      <strong>Available IDs</strong>
+      <ul class="demo-list">
+        @for (team of state.teamOptions; track team.id) {
+          <li>
+            <span>{{ team.label }}</span>
+            <code>{{ team.id }}</code>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+  <section class="demo-panel">
+    <h3>WebMCP · Multi-selection tools</h3>
+    <p class="demo-muted">
+      The tool atomically replaces the selection. Unknown IDs, duplicates or more than three IDs are
+      rejected without changing the UI. An empty array clears the selection.
+    </p>
+    <div class="demo-stack">
+      <label for="team-ids-tool">selectDemoTeams · comma-separated IDs</label>
+      <input
+        id="team-ids-tool"
+        type="text"
+        [ngModel]="idsInput()"
+        (ngModelChange)="idsInput.set($event)"
+      />
+      <button tuiButton type="button" (click)="select()">Run multi-selection tool</button>
+      <button tuiButton type="button" appearance="outline" (click)="read()">
+        Read available team IDs
+      </button>
+      <div class="demo-muted">Last tool response</div>
+      <pre class="demo-result" aria-live="polite">{{ result() }}</pre>
+    </div>
+  </section>
+</div>

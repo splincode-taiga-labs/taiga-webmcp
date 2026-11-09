@@ -15,6 +15,21 @@ export class DemoState {
     {id: 'emp-103', name: 'Alan Turing', team: 'Infrastructure'},
     {id: 'emp-104', name: 'Margaret Hamilton', team: 'Design Systems'},
   ];
+  readonly teamOptions = [
+    {id: 'team-platform', label: 'Platform'},
+    {id: 'team-infrastructure', label: 'Infrastructure'},
+    {id: 'team-design', label: 'Design Systems'},
+  ] as const;
+
+  readonly teamLabels = this.teamOptions.map(({label}) => label);
+  readonly selectedTeamIds = signal<readonly string[]>([]);
+  readonly selectedTeamLabels = computed(() =>
+    this.selectedTeamIds().flatMap((id) => {
+      const option = this.teamOptions.find((team) => team.id === id);
+      return option ? [option.label] : [];
+    }),
+  );
+
   readonly query = signal('');
   readonly selectedId = signal<string | null>(null);
   readonly sortColumn = signal<'name' | 'team'>('name');
@@ -46,6 +61,14 @@ export class DemoState {
   readonly selectedEmployee = computed(
     () => this.employees.find((employee) => employee.id === this.selectedId()) ?? null,
   );
+
+  setSelectedTeamLabels(labels: readonly string[]): void {
+    const ids = labels.flatMap((label) => {
+      const option = this.teamOptions.find((team) => team.label === label);
+      return option ? [option.id] : [];
+    });
+    this.selectedTeamIds.set(ids);
+  }
 
   setQuery(query: string): void {
     this.query.set(query);

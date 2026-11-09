@@ -6,7 +6,7 @@ describe('WebMCP documentation navigation', () => {
   it('keeps links unique and includes independent examples', () => {
     const routes = DOC_PAGES.map((page) => page.route);
     expect(new Set(routes).size).toBe(routes.length);
-    expect(routes).toEqual(['/webmcp', '/table-tools', '/signal-forms']);
+    expect(routes).toEqual(['/webmcp', '/table-tools', '/multi-select', '/signal-forms']);
   });
 
   it('supports direct links and browser history for API and Setup', () => {

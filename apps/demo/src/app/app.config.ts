@@ -15,7 +15,15 @@ import {
 import {provideTaiga} from '@taiga-ui/core';
 import {provideHighlightOptions} from 'ngx-highlightjs';
 
-import {FILTER_TOOL, PAGINATION_TOOL, READ_TOOL, SELECT_TOOL, SORT_TOOL} from './demo-tools';
+import {
+  FILTER_TOOL,
+  MULTI_SELECTION_TOOL,
+  PAGINATION_TOOL,
+  READ_TEAM_OPTIONS_TOOL,
+  READ_TOOL,
+  SELECT_TOOL,
+  SORT_TOOL,
+} from './demo-tools';
 import {DOC_PAGES} from './docs-navigation';
 
 const routes: Routes = [
@@ -41,6 +49,11 @@ const routes: Routes = [
     loadComponent: () => import('./table-tools.page').then((m) => m.TableToolsPage),
   },
   {
+    path: 'multi-select',
+    data: {title: 'MultiSelect'},
+    loadComponent: () => import('./multi-select.page').then((m) => m.MultiSelectPage),
+  },
+  {
     path: 'signal-forms',
     data: {title: 'Signal Forms'},
     loadComponent: () => import('./signal-forms.page').then((m) => m.SignalFormsPage),
@@ -58,6 +71,8 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalWebMcpTools([READ_TOOL]),
     provideExperimentalWebMcpTools([SORT_TOOL]),
     provideExperimentalWebMcpTools([PAGINATION_TOOL]),
+    provideExperimentalWebMcpTools([MULTI_SELECTION_TOOL]),
+    provideExperimentalWebMcpTools([READ_TEAM_OPTIONS_TOOL]),
     {
       provide: TUI_DOC_PAGES,
       useValue: DOC_PAGES,

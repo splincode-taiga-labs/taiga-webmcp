@@ -1,5 +1,6 @@
 export {tuiWebMcpFilterTool} from './tools/filter.tool';
 export {tuiWebMcpSelectionTool} from './tools/selection.tool';
+export {tuiWebMcpMultiSelectionTool} from './tools/multi-selection.tool';
 export {tuiWebMcpReadTool} from './tools/read.tool';
 export {tuiWebMcpSortTool} from './tools/sort.tool';
 export {tuiWebMcpPaginationTool} from './tools/pagination.tool';
@@ -8,6 +9,7 @@ export type {
   TuiWebMcpFilterOptions,
   TuiWebMcpSelectionOption,
   TuiWebMcpSelectionOptions,
+  TuiWebMcpMultiSelectionOptions,
   TuiWebMcpReadOptions,
   TuiWebMcpResult,
   TuiWebMcpSortDirection,

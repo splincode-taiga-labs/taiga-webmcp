@@ -5,6 +5,7 @@ import {tuiWebMcpPaginationTool} from './pagination.tool';
 import {tuiWebMcpSortTool} from './sort.tool';
 import {tuiWebMcpReadTool} from './read.tool';
 import {tuiWebMcpSelectionTool} from './selection.tool';
+import {tuiWebMcpMultiSelectionTool} from './multi-selection.tool';
 
 describe('WebMCP tools', () => {
   it('updates the application filter state', () => {
@@ -49,6 +50,112 @@ describe('WebMCP tools', () => {
     values = [{id: '2', label: 'Grace'}];
     expect(tool.execute({id: '2'}).content[0]?.text).toBe('Selected: Grace');
     expect(select).toHaveBeenCalledExactlyOnceWith('2');
+  });
+
+  it('selects several approved stable IDs atomically and preserves input order', () => {
+    const select = vi.fn();
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'selectTeams',
+      description: 'Select teams',
+      options: () => [
+        {id: 'team-platform', label: 'Platform'},
+        {id: 'team-design', label: 'Design Systems'},
+      ],
+      select,
+      maxSelection: 2,
+    });
+
+    expect(tool.inputSchema.properties.ids).toMatchObject({
+      type: 'array',
+      uniqueItems: true,
+      maxItems: 2,
+    });
+    expect(tool.execute({ids: ['team-design', 'team-platform']}).isError).toBeUndefined();
+    expect(select).toHaveBeenCalledExactlyOnceWith(['team-design', 'team-platform']);
+    expect(tool.execute({ids: []}).isError).toBeUndefined();
+    expect(select).toHaveBeenLastCalledWith([]);
+  });
+
+  it('rejects malformed, duplicate, unauthorized and oversized selections without mutation', () => {
+    const select = vi.fn();
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'selectTeams',
+      description: 'Select teams',
+      options: () => [{id: 'team-platform', label: 'Platform'}],
+      select,
+      maxSelection: 1,
+    });
+
+    for (const ids of [
+      null,
+      'team-platform',
+      [42],
+      ['team-platform', 42],
+      ['team-platform', 'team-platform'],
+      ['unknown'],
+      ['team-platform', 'unknown'],
+    ]) {
+      expect(tool.execute({ids}).isError).toBe(true);
+    }
+    expect(select).not.toHaveBeenCalled();
+  });
+
+  it('never partially applies an allowed and a disallowed ID', () => {
+    const select = vi.fn();
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'choose',
+      description: 'Choose',
+      options: () => [{id: 'one', label: 'One'}],
+      select,
+      maxSelection: 2,
+    });
+
+    expect(tool.execute({ids: ['one', 'unavailable']}).isError).toBe(true);
+    expect(select).not.toHaveBeenCalled();
+  });
+
+  it('checks fresh available options on every invocation', () => {
+    const select = vi.fn();
+    let options = [{id: 'one', label: 'One'}];
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'choose',
+      description: 'Choose',
+      options: () => options,
+      select,
+    });
+
+    expect(tool.execute({ids: ['one']}).isError).toBeUndefined();
+    options = [{id: 'two', label: 'Two'}];
+    expect(tool.execute({ids: ['one']}).isError).toBe(true);
+    expect(tool.execute({ids: ['two']}).isError).toBeUndefined();
+    expect(select).toHaveBeenCalledTimes(2);
+  });
+
+  it('rejects ambiguous allowed options and invalid limits', () => {
+    const select = vi.fn();
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'choose',
+      description: 'Choose',
+      options: () => [
+        {id: 'one', label: 'First'},
+        {id: 'one', label: 'Duplicate'},
+      ],
+      select,
+    });
+    expect(tool.execute({ids: ['one']}).isError).toBe(true);
+    expect(select).not.toHaveBeenCalled();
+
+    for (const maxSelection of [-1, 0, 1.5, Number.POSITIVE_INFINITY]) {
+      expect(() =>
+        tuiWebMcpMultiSelectionTool({
+          name: 'choose',
+          description: 'Choose',
+          options: () => [],
+          select,
+          maxSelection,
+        }),
+      ).toThrow(RangeError);
+    }
   });
 
   it('returns only an application-approved snapshot', () => {

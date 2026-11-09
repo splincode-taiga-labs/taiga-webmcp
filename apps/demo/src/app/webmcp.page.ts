@@ -41,6 +41,9 @@ import {SIGNAL_FORM_EXAMPLE, TABLE_EXAMPLE} from './webmcp-examples';
         <h2>Tool helpers</h2>
         <p><code>tuiWebMcpFilterTool</code> updates a controlled search string.</p>
         <p><code>tuiWebMcpSelectionTool</code> selects a permitted stable ID.</p>
+        <p>
+          <code>tuiWebMcpMultiSelectionTool</code> atomically selects several permitted stable IDs.
+        </p>
         <p><code>tuiWebMcpReadTool</code> exposes explicit read-only application data.</p>
         <p><code>tuiWebMcpSortTool</code> sorts only approved columns.</p>
         <p><code>tuiWebMcpPaginationTool</code> validates page bounds and sizes.</p>
@@ -57,9 +60,9 @@ import {SIGNAL_FORM_EXAMPLE, TABLE_EXAMPLE} from './webmcp-examples';
       <ng-template pageTab="Setup">
         <h2>Browser and security</h2>
         <p>
-          This playground uses TuiTable, TuiTablePagination, TuiInput and TuiSelect. It can be used
-          manually in any supported Angular browser. Real AI agent access requires browser WebMCP
-          support or a compatible polyfill.
+          This playground uses TuiTable, TuiTablePagination, TuiInput, TuiSelect and TuiMultiSelect.
+          It can be used manually in any supported Angular browser. Real AI agent access requires
+          browser WebMCP support or a compatible polyfill.
         </p>
         <p>
           The Signal Forms example stores drafts in memory only; a real application must authorize
