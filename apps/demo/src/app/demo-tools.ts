@@ -1,6 +1,7 @@
 import {inject} from '@angular/core';
 import {
   tuiWebMcpFilterTool,
+  tuiWebMcpMultiSelectionTool,
   tuiWebMcpPaginationTool,
   tuiWebMcpReadTool,
   tuiWebMcpSelectionTool,
@@ -51,5 +52,23 @@ export const READ_TOOL = tuiWebMcpReadTool({
       pagination: {page: state.page(), size: state.size(), total: state.filteredEmployees().length},
       employees: state.visibleEmployees(),
     };
+  },
+});
+
+export const MULTI_SELECTION_TOOL = tuiWebMcpMultiSelectionTool({
+  name: 'selectDemoTeams',
+  description:
+    'Replace the selected teams by stable IDs. Use readDemoTeamOptions for the allowed IDs.',
+  options: () => inject(DemoState).teamOptions,
+  select: (ids) => inject(DemoState).selectedTeamIds.set([...ids]),
+  maxSelection: 3,
+});
+
+export const READ_TEAM_OPTIONS_TOOL = tuiWebMcpReadTool({
+  name: 'readDemoTeamOptions',
+  description: 'List available team IDs and the currently selected IDs.',
+  read: () => {
+    const state = inject(DemoState);
+    return {options: state.teamOptions, selectedIds: state.selectedTeamIds()};
   },
 });

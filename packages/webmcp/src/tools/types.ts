@@ -62,3 +62,15 @@ export interface TuiWebMcpPaginationOptions {
   readonly getTotal: () => number;
   readonly setPagination: (pagination: TuiWebMcpPaginationState) => void;
 }
+
+/** Configuration for an atomic selection of multiple stable IDs. */
+export interface TuiWebMcpMultiSelectionOptions {
+  readonly name: string;
+  readonly description: string;
+  /** Only choices currently authorized and available to the user. */
+  readonly options: () => readonly TuiWebMcpSelectionOption[];
+  /** Replaces the whole selection, including when ids is empty. */
+  readonly select: (ids: readonly string[]) => void;
+  /** Maximum number of selected items; defaults to 100. */
+  readonly maxSelection?: number;
+}

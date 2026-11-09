@@ -104,3 +104,39 @@ test('the Signal Forms tool registers only while its form is mounted', async ({p
     .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
     .not.toContain('saveDemoEmployeeDraft');
 });
+
+test('native WebMCP multi-selection synchronizes with Taiga UI and clears atomically', async ({page}) => {
+  await page.goto('/#/multi-select');
+
+  await expect
+    .poll(async () => (await page.webmcp.tools()).map((tool) => tool.name))
+    .toEqual(expect.arrayContaining(['selectDemoTeams', 'readDemoTeamOptions']));
+
+  const available: unknown = await page.webmcp.callTool('readDemoTeamOptions', {});
+  expect(JSON.stringify(available)).toContain('team-platform');
+  expect(JSON.stringify(available)).toContain('team-design');
+
+  const selected: unknown = await page.webmcp.callTool('selectDemoTeams', {
+    ids: ['team-platform', 'team-design'],
+  });
+  expect(selected).toMatchObject({content: [{type: 'text', text: 'Selected 2 items'}]});
+
+  await expect(page.getByTestId('selected-team-ids')).toContainText('team-platform, team-design');
+  await expect
+    .poll(() =>
+      page.locator('select[tuiMultiSelect]').evaluate(
+        (select: HTMLSelectElement) => Array.from(select.selectedOptions, (option) => option.text),
+      ),
+    )
+    .toEqual(['Platform', 'Design Systems']);
+
+  const denied: unknown = await page.webmcp.callTool('selectDemoTeams', {
+    ids: ['team-platform', 'unknown'],
+  });
+  expect(denied).toMatchObject({isError: true});
+  await expect(page.getByTestId('selected-team-ids')).toContainText('team-platform, team-design');
+
+  const cleared: unknown = await page.webmcp.callTool('selectDemoTeams', {ids: []});
+  expect(cleared).toMatchObject({content: [{type: 'text', text: 'Selected 0 items'}]});
+  await expect(page.getByTestId('selected-team-ids')).toContainText('None');
+});

@@ -22,7 +22,7 @@ npm run test:e2e
 npm start
 ```
 
-Open http://localhost:4200/#/webmcp to see the **@taiga-ui/addon-doc** demo. Use the sidebar to open independent **Table tools** (`#/table-tools`) and **Signal Forms** (`#/signal-forms`) examples. The WebMCP page tabs have navigable deep links (`#/webmcp/API`, `#/webmcp/Setup`), including browser history support. The playground simulates direct tool invocations, so you can try it without an AI agent. With native WebMCP support (or a polyfill), browser agents can discover the same registered tools.
+Open http://localhost:4200/#/webmcp to see the **@taiga-ui/addon-doc** demo. Use the sidebar to open independent **Table tools** (`#/table-tools`), **MultiSelect** (`#/multi-select`) and **Signal Forms** (`#/signal-forms`) examples. The WebMCP page tabs have navigable deep links (`#/webmcp/API`, `#/webmcp/Setup`), including browser history support. The playground simulates direct tool invocations, so you can try it without an AI agent. With native WebMCP support (or a polyfill), browser agents can discover the same registered tools.
 
 `npm run build:demo` builds the documentation site for static hosting. The demo copies SVG icons from the `@taiga-ui/icons` package into `assets/taiga-ui/icons` and ships its own local logo; both work when hosted under the GitHub Pages repository subpath without relying on an external CDN.
 
@@ -34,6 +34,7 @@ This repository uses Prettier 3.9.10 for TypeScript, Angular templates, JSON, CS
 
 - `tuiWebMcpFilterTool({name, description, setQuery, maxLength?})`: validates a string and updates a controlled filter.
 - `tuiWebMcpSelectionTool({name, description, options, select})`: checks the selected stable ID against the latest allowed options.
+- `tuiWebMcpMultiSelectionTool({name, description, options, select, maxSelection?})`: atomically replaces several selected stable IDs, checking a fresh allowlist, uniqueness, and an optional limit (100 by default). Pass `ids: []` to clear.
 - `tuiWebMcpReadTool({name, description, read})`: serializes an explicit, read-only snapshot.
 - `tuiWebMcpSortTool({name, description, columns, setSort})`: sorts using approved column names and `asc`/`desc` directions.
 - `tuiWebMcpPaginationTool({name, description, pageSizes, getTotal, setPagination})`: validates zero-based page indices and allowed sizes against the current item count.
@@ -57,6 +58,10 @@ export const providers = [
 ```
 
 The corresponding Taiga UI input binds to the same state. In real applications, locate tools at app/route injector scope. For route-level tools enable `withAutoCleanupInjectors()`.
+
+## Taiga UI MultiSelect integration
+
+The `#/multi-select` example connects a native `tuiMultiSelect` control with `tuiWebMcpMultiSelectionTool`, using **stable IDs for agent calls** and readable labels for Taiga UI. The companion `readDemoTeamOptions` tool exposes allowed IDs to the agent without scraping the DOM. A rejected selection never partially changes UI state. Selection order is preserved, and `ids: []` clears the selection. The library does not import Taiga UI components: it operates on host-application state.
 
 ## Signal Forms integration
 
@@ -96,7 +101,7 @@ Licensed under Apache-2.0.
 
 ## Browser WebMCP integration tests
 
-Playwright 1.64+ runs Chromium with the experimental `--enable-features=WebMCP` flag. Alongside documentation smoke checks, the E2E suite discovers application-registered tools through `page.webmcp.tools()` and calls them through `page.webmcp.callTool()`. The tests assert that filter, sort, pagination and selection update the real Taiga UI and that Signal Forms tools are removed when the form is unmounted.
+Playwright 1.64+ runs Chromium with the experimental `--enable-features=WebMCP` flag. Alongside documentation smoke checks, the E2E suite discovers application-registered tools through `page.webmcp.tools()` and calls them through `page.webmcp.callTool()`. The tests assert that filter, sort, pagination, single selection and multi-selection update the real Taiga UI and that Signal Forms tools are removed when the form is unmounted.
 
 This tests the **browser's WebMCP API** and Angular's registration lifecycle, not just direct execution of descriptor callbacks. The browser API remains experimental and may require updates as specifications evolve. Do not enable the experimental feature by default in production clients.
 

@@ -60,3 +60,28 @@ provideExperimentalWebMcpTools([
     (ngModelChange)="state.query.set($event)" />
 </tui-textfield>`,
 };
+
+export const MULTI_SELECT_EXAMPLE = {
+  TypeScript: `import {inject, provideExperimentalWebMcpTools} from '@angular/core';
+import {tuiWebMcpMultiSelectionTool} from '@taiga-ui-labs/webmcp';
+
+provideExperimentalWebMcpTools([
+  tuiWebMcpMultiSelectionTool({
+    name: 'selectTeams',
+    description: 'Replace selected teams by stable IDs.',
+    options: () => inject(TeamsState).availableTeams(),
+    select: (ids) => inject(TeamsState).selectedIds.set(ids),
+    maxSelection: 3,
+  }),
+]);`,
+  HTML: `<tui-textfield multi tuiChevron>
+  <select
+    aria-label="Selected teams"
+    tuiMultiSelect
+    [items]="teamLabels"
+    [ngModel]="selectedLabels()"
+    (ngModelChange)="setSelectedLabels($event)"
+  ></select>
+  <tui-input-chip *tuiItem />
+</tui-textfield>`,
+};

@@ -2,6 +2,7 @@
 export const DOC_PAGES = [
   {title: 'WebMCP', section: 'Examples', route: '/webmcp'},
   {title: 'Table tools', section: 'Examples', route: '/table-tools'},
+  {title: 'MultiSelect', section: 'Examples', route: '/multi-select'},
   {title: 'Signal Forms', section: 'Examples', route: '/signal-forms'},
 ] as const;
 
