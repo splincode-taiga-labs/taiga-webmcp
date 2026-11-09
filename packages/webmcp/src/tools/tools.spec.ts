@@ -100,6 +100,20 @@ describe('WebMCP tools', () => {
     expect(select).not.toHaveBeenCalled();
   });
 
+  it('never partially applies an allowed and a disallowed ID', () => {
+    const select = vi.fn();
+    const tool = tuiWebMcpMultiSelectionTool({
+      name: 'choose',
+      description: 'Choose',
+      options: () => [{id: 'one', label: 'One'}],
+      select,
+      maxSelection: 2,
+    });
+
+    expect(tool.execute({ids: ['one', 'unavailable']}).isError).toBe(true);
+    expect(select).not.toHaveBeenCalled();
+  });
+
   it('checks fresh available options on every invocation', () => {
     const select = vi.fn();
     let options = [{id: 'one', label: 'One'}];
