@@ -86,7 +86,15 @@ describe('WebMCP tools', () => {
       maxSelection: 1,
     });
 
-    for (const ids of [null, 'team-platform', [42], ['team-platform', 42], ['team-platform', 'team-platform'], ['unknown'], ['team-platform', 'unknown']]) {
+    for (const ids of [
+      null,
+      'team-platform',
+      [42],
+      ['team-platform', 42],
+      ['team-platform', 'team-platform'],
+      ['unknown'],
+      ['team-platform', 'unknown'],
+    ]) {
       expect(tool.execute({ids}).isError).toBe(true);
     }
     expect(select).not.toHaveBeenCalled();
@@ -114,7 +122,10 @@ describe('WebMCP tools', () => {
     const tool = tuiWebMcpMultiSelectionTool({
       name: 'choose',
       description: 'Choose',
-      options: () => [{id: 'one', label: 'First'}, {id: 'one', label: 'Duplicate'}],
+      options: () => [
+        {id: 'one', label: 'First'},
+        {id: 'one', label: 'Duplicate'},
+      ],
       select,
     });
     expect(tool.execute({ids: ['one']}).isError).toBe(true);

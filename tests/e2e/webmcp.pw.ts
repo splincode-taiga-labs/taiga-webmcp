@@ -105,7 +105,9 @@ test('the Signal Forms tool registers only while its form is mounted', async ({p
     .not.toContain('saveDemoEmployeeDraft');
 });
 
-test('native WebMCP multi-selection synchronizes with Taiga UI and clears atomically', async ({page}) => {
+test('native WebMCP multi-selection synchronizes with Taiga UI and clears atomically', async ({
+  page,
+}) => {
   await page.goto('/#/multi-select');
 
   await expect
@@ -124,9 +126,11 @@ test('native WebMCP multi-selection synchronizes with Taiga UI and clears atomic
   await expect(page.getByTestId('selected-team-ids')).toContainText('team-platform, team-design');
   await expect
     .poll(() =>
-      page.locator('select[tuiMultiSelect]').evaluate(
-        (select: HTMLSelectElement) => Array.from(select.selectedOptions, (option) => option.text),
-      ),
+      page
+        .locator('select[tuiMultiSelect]')
+        .evaluate((select: HTMLSelectElement) =>
+          Array.from(select.selectedOptions, (option) => option.text),
+        ),
     )
     .toEqual(['Platform', 'Design Systems']);
 
